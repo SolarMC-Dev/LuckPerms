@@ -28,7 +28,7 @@ package me.lucko.luckperms.bukkit;
 import me.lucko.luckperms.common.sender.Sender;
 import me.lucko.luckperms.common.sender.SenderFactory;
 
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+//import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.luckperms.api.util.Tristate;
 
@@ -40,11 +40,11 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 public class BukkitSenderFactory extends SenderFactory<LPBukkitPlugin, CommandSender> {
-    private final BukkitAudiences audiences;
+//    private final BukkitAudiences audiences; // Solar
 
     public BukkitSenderFactory(LPBukkitPlugin plugin) {
         super(plugin);
-        this.audiences = BukkitAudiences.create(plugin.getLoader());
+//        this.audiences = BukkitAudiences.create(plugin.getLoader()); // Solar
     }
 
     @Override
@@ -67,9 +67,9 @@ public class BukkitSenderFactory extends SenderFactory<LPBukkitPlugin, CommandSe
     protected void sendMessage(CommandSender sender, Component message) {
         // we can safely send async for players and the console - otherwise, send it sync
         if (sender instanceof Player || sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender) {
-            this.audiences.sender(sender).sendMessage(message);
+            sender.sendMessage(message); // Solar
         } else {
-            getPlugin().getBootstrap().getScheduler().executeSync(() -> this.audiences.sender(sender).sendMessage(message));
+            getPlugin().getBootstrap().getScheduler().executeSync(() -> sender.sendMessage(message)); // Solar
         }
     }
 
@@ -102,6 +102,6 @@ public class BukkitSenderFactory extends SenderFactory<LPBukkitPlugin, CommandSe
     @Override
     public void close() {
         super.close();
-        this.audiences.close();
+//        this.audiences.close(); // Solar
     }
 }

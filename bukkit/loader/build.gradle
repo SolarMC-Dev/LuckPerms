@@ -1,27 +1,32 @@
+import org.apache.tools.ant.filters.ReplaceTokens // Solar
+
 plugins {
     id 'com.github.johnrengelman.shadow'
 }
 
-repositories {
-    maven { url 'https://papermc.io/repo/repository/maven-public/' }
-}
+// Solar - removed repositories
 
 dependencies {
-    compileOnly 'com.destroystokyo.paper:paper-api:1.15.2-R0.1-SNAPSHOT'
+    compileOnly "gg.solarmc.paper:solarpaper-api:1.2.1-SNAPSHOT" // Solar
 
-    compile project(':api')
-    compile project(':common:loader-utils')
+    implementation project(':api') // Solar
+    implementation project(':common:loader-utils') // Solar
 }
 
 processResources {
+// Solar start
+    filter ReplaceTokens, tokens: [
+        "pluginVersion": project.ext.fullVersion
+    ] /*
     from(sourceSets.main.resources.srcDirs) {
         expand 'pluginVersion': project.ext.fullVersion
         include 'plugin.yml'
     }
+*/ // Solar end
 }
 
 shadowJar {
-    archiveName = "LuckPerms-Bukkit-${project.ext.fullVersion}.jar"
+    archiveFileName = "LuckPerms-Bukkit-${project.ext.fullVersion}.jar" // Solar
 
     from {
         project(':bukkit').tasks.shadowJar.archiveFile

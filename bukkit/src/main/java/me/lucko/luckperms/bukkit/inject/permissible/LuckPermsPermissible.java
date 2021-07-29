@@ -75,6 +75,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class LuckPermsPermissible extends PermissibleBase {
 
+/* Solar start - get rid of garbage
     private static final Field ATTACHMENTS_FIELD;
 
     static {
@@ -85,6 +86,7 @@ public class LuckPermsPermissible extends PermissibleBase {
             throw new ExceptionInInitializerError(e);
         }
     }
+*/ // Solar end
 
     // the LuckPerms user this permissible references.
     private final User user;
@@ -127,6 +129,7 @@ public class LuckPermsPermissible extends PermissibleBase {
     private void injectFakeAttachmentsList() {
         FakeAttachmentList fakeList = new FakeAttachmentList();
 
+/* Solar start - get rid of garbage
         try {
             // the field we need to modify is in the superclass - it has private
             // and final modifiers so we have to use reflection to modify it.
@@ -134,6 +137,7 @@ public class LuckPermsPermissible extends PermissibleBase {
         } catch (Exception e) {
             e.printStackTrace();
         }
+*/ // Solar end
     }
 
     @Override
@@ -305,6 +309,10 @@ public class LuckPermsPermissible extends PermissibleBase {
     @Override
     public void clearPermissions() {
         this.hookedAttachments.forEach(LuckPermsPermissionAttachment::remove);
+// Solar start - pulled from PermissibleInjector#uninject
+        // set to inactive
+        getActive().set(false);
+// Solar end
     }
 
     public User getUser() {

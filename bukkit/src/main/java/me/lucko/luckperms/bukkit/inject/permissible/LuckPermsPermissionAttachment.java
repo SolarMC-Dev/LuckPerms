@@ -63,6 +63,7 @@ public class LuckPermsPermissionAttachment extends PermissionAttachment {
      * The field in PermissionAttachment where the attachments applied permissions
      * are *usually* held.
      */
+/* Solar start - remove garbage
     private static final Field PERMISSION_ATTACHMENT_PERMISSIONS_FIELD;
 
     static {
@@ -73,6 +74,7 @@ public class LuckPermsPermissionAttachment extends PermissionAttachment {
             throw new ExceptionInInitializerError(e);
         }
     }
+*/ // Solar end
 
     /**
      * The parent LPPermissible
@@ -135,6 +137,7 @@ public class LuckPermsPermissionAttachment extends PermissionAttachment {
         // inner class - this proxies calls back to us
         FakeBackingMap fakeMap = new FakeBackingMap();
 
+/* Solar start - get rid of garbage
         try {
             // the field we need to modify is in the superclass - it has private
             // and final modifiers so we have to use reflection to modify it.
@@ -142,6 +145,7 @@ public class LuckPermsPermissionAttachment extends PermissionAttachment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+*/ // Solar end
     }
 
     @Override

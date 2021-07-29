@@ -50,11 +50,12 @@ public final class PermissibleInjector {
      *
      * This field is where the permissible is stored on a HumanEntity.
      */
-    private static final Field HUMAN_ENTITY_PERMISSIBLE_FIELD;
+//    private static final Field HUMAN_ENTITY_PERMISSIBLE_FIELD; // Solar
 
     /**
      * The field where attachments are stored on a permissible base.
      */
+/* Solar start - remove reflection
     private static final Field PERMISSIBLE_BASE_ATTACHMENTS_FIELD;
 
     static {
@@ -79,6 +80,7 @@ public final class PermissibleInjector {
             throw new ExceptionInInitializerError(e);
         }
     }
+*/ // Solar end
 
     /**
      * Injects a {@link LuckPermsPermissible} into a {@link Player}.
@@ -90,6 +92,7 @@ public final class PermissibleInjector {
      */
     public static void inject(Player player, LuckPermsPermissible newPermissible, PluginLogger logger) throws Exception {
 
+/* Solar start- remove reflection
         // get the existing PermissibleBase held by the player
         PermissibleBase oldPermissible = (PermissibleBase) HUMAN_ENTITY_PERMISSIBLE_FIELD.get(player);
 
@@ -115,13 +118,17 @@ public final class PermissibleInjector {
         newPermissible.convertAndAddAttachments(attachments);
         attachments.clear();
         oldPermissible.clearPermissions();
+*/ // Solar end
 
         // Setup the new permissible
         newPermissible.getActive().set(true);
-        newPermissible.setOldPermissible(oldPermissible);
+//        newPermissible.setOldPermissible(oldPermissible); // Solar
 
         // inject the new instance
-        HUMAN_ENTITY_PERMISSIBLE_FIELD.set(player, newPermissible);
+// Solar start
+        player.setPermissible(newPermissible);
+        // HUMAN_ENTITY_PERMISSIBLE_FIELD.set(player, newPermissible);
+// Solar end
     }
 
     /**
@@ -132,7 +139,10 @@ public final class PermissibleInjector {
      * @throws Exception propagates any exceptions which were thrown during uninjection
      */
     public static void uninject(Player player, boolean dummy) throws Exception {
-
+// Solar start
+        assert dummy : "Not possible to safely uninject except on quit";
+        if (dummy) player.setPermissible(DummyPermissibleBase.INSTANCE);
+/*
         // gets the players current permissible.
         PermissibleBase permissible = (PermissibleBase) HUMAN_ENTITY_PERMISSIBLE_FIELD.get(player);
 
@@ -160,9 +170,11 @@ public final class PermissibleInjector {
                 HUMAN_ENTITY_PERMISSIBLE_FIELD.set(player, newPb);
             }
         }
+*/ // Solar end
     }
 
     public static void checkInjected(Player player, PluginLogger logger) {
+/* Solar start 
         PermissibleBase permissibleBase;
         try {
             permissibleBase = (PermissibleBase) HUMAN_ENTITY_PERMISSIBLE_FIELD.get(player);
@@ -180,6 +192,7 @@ public final class PermissibleInjector {
                 "Please make sure that LuckPerms is the only permission plugin installed on your server!\n" +
                 "(unless you're performing a migration, in which case, just remember to remove your old " +
                 "permission plugin once you're done!)");
+*/ // Solar end
     }
 
 }

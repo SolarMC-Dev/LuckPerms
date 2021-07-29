@@ -49,7 +49,10 @@ public class BukkitCommandListUpdater implements LuckPermsEventListener {
     public static boolean isSupported() {
         try {
             Player.class.getMethod("updateCommands");
-            return true;
+            // Solar start
+            org.slf4j.LoggerFactory.getLogger(BukkitCommandListUpdater.class).info("Please re-enable BukkitCommandListUpdater as it is now supported");
+            return false;
+            // Solar end
         } catch (NoSuchMethodException e) {
             return false;
         }
@@ -97,8 +100,11 @@ public class BukkitCommandListUpdater implements LuckPermsEventListener {
             return;
         }
         
+        // Solar start - disable
+        throw new UnsupportedOperationException(); /*
         this.plugin.getBootstrap().getScheduler().sync()
                 .execute(() -> this.plugin.getBootstrap().getPlayer(uniqueId).ifPresent(Player::updateCommands));
+        */ // Solar end
     }
 
     private final class SendBuffer extends BufferedRequest<Void> {

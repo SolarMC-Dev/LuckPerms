@@ -91,6 +91,9 @@ public class DependencyRegistry {
             dependencies.remove(Dependency.SLF4J_API);
             dependencies.remove(Dependency.SLF4J_SIMPLE);
         }
+// Solar start
+        dependencies.removeAll(Set.of(Dependency.MARIADB_DRIVER, Dependency.CAFFEINE, Dependency.HIKARI, Dependency.ADVENTURE));
+// Solar end
 
         return dependencies;
     }

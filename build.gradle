@@ -1,25 +1,21 @@
-buildscript {
-    repositories {
-        maven { url 'https://plugins.gradle.org/m2' }
-    }
-
-    dependencies {
-        classpath 'gradle.plugin.net.minecrell:licenser:0.4.1'
-    }
+// Solar start - update licenser
+plugins {
+    id 'org.cadixdev.licenser' version '0.6.1'
 }
+// Solar end
 
 defaultTasks 'licenseFormat', 'build'
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'maven'
-    apply plugin: 'net.minecrell.licenser'
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+//    apply plugin: 'net.minecrell.licenser' // Solar
 
     group = 'me.lucko.luckperms'
     version = '5.3-SNAPSHOT'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = 16
+    targetCompatibility = 16
 
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
@@ -30,6 +26,10 @@ subprojects {
     }
 
     def determinePatchVersion = {
+// Solar start
+        return "SNAPSHOT" 
+    }
+/*
         // get the name of the last tag
         def tagInfo = new ByteArrayOutputStream()
         exec {
@@ -43,6 +43,7 @@ subprojects {
         }
         return tagInfo.split("-")[1]
     }
+*/ // Solar
 
     project.ext.majorVersion = '5'
     project.ext.minorVersion = '3'
@@ -59,6 +60,19 @@ subprojects {
     repositories {
         mavenCentral()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-        maven { url 'https://repo.lucko.me/' }
+//        maven { url 'https://repo.lucko.me/' }
+        maven { url "https://mvn-repo.solarmc.gg/releases" }
+        maven { url "https://mvn-repo.solarmc.gg/snapshots" }
+        maven { url "https://mvn-repo.arim.space/lesser-gpl3" }
     }
+
+// Solar start
+    dependencies {
+        modules {
+            module("com.mojang:brigadier") {
+                replacedBy("gg.solarmc:brigadier")
+            }
+        }
+    }
+// Solar end
 }

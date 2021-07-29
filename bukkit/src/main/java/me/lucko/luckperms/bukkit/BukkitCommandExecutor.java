@@ -122,6 +122,7 @@ public class BukkitCommandExecutor extends CommandManager implements TabExecutor
     }
 
     private List<String> resolveSelectors(CommandSender sender, List<String> args) {
+        return args; /* Solar - disable
         if (!SELECT_ENTITIES_SUPPORTED) {
             return args;
         }
@@ -162,5 +163,6 @@ public class BukkitCommandExecutor extends CommandManager implements TabExecutor
         }
 
         return args;
+        */ // Solar
     }
 }

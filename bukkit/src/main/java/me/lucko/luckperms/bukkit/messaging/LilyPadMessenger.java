@@ -33,25 +33,20 @@ import net.luckperms.api.messenger.message.OutgoingMessage;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import lilypad.client.connect.api.Connect;
-import lilypad.client.connect.api.event.EventListener;
-import lilypad.client.connect.api.event.MessageEvent;
-import lilypad.client.connect.api.request.RequestException;
-import lilypad.client.connect.api.request.impl.MessageRequest;
-
 import java.nio.charset.StandardCharsets;
+
 import java.util.Collections;
 
+// Solar - gut whole class
 /**
  * An implementation of {@link Messenger} using LilyPad.
  */
-public class LilyPadMessenger implements Messenger {
+public final class LilyPadMessenger implements Messenger {
     private static final String CHANNEL = "luckperms:update";
 
     private final LPBukkitPlugin plugin;
     private final IncomingMessageConsumer consumer;
 
-    private Connect connect;
 
     public LilyPadMessenger(LPBukkitPlugin plugin, IncomingMessageConsumer consumer) {
         this.plugin = plugin;
@@ -59,34 +54,16 @@ public class LilyPadMessenger implements Messenger {
     }
 
     public void init() {
-        this.connect = this.plugin.getBootstrap().getServer().getServicesManager().getRegistration(Connect.class).getProvider();
-        this.connect.registerEvents(this);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void close() {
-        this.connect.unregisterEvents(this);
+        init();
     }
 
     @Override
     public void sendOutgoingMessage(@NonNull OutgoingMessage outgoingMessage) {
-        MessageRequest request = new MessageRequest(Collections.emptyList(), CHANNEL, outgoingMessage.asEncodedString().getBytes(StandardCharsets.UTF_8));
-        try {
-            this.connect.request(request);
-        } catch (RequestException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @EventListener
-    public void onMessage(MessageEvent event) {
-        this.plugin.getBootstrap().getScheduler().executeAsync(() -> {
-            String channel = event.getChannel();
-            if (!channel.equals(CHANNEL)) {
-                return;
-            }
-            String message = new String(event.getMessage(), StandardCharsets.UTF_8);
-            this.consumer.consumeIncomingMessageAsString(message);
-        });
+        init();
     }
 }
