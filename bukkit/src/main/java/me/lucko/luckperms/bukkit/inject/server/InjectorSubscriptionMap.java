@@ -39,6 +39,7 @@ import java.util.Objects;
  * Injects a {@link LuckPermsSubscriptionMap} into the {@link PluginManager}.
  */
 public class InjectorSubscriptionMap {
+/* Solar start
     private static final Field PERM_SUBS_FIELD;
 
     static {
@@ -51,6 +52,7 @@ public class InjectorSubscriptionMap {
         }
         PERM_SUBS_FIELD = permSubsField;
     }
+*/ // Solar end
 
     private final LPBukkitPlugin plugin;
 
@@ -70,6 +72,9 @@ public class InjectorSubscriptionMap {
     }
 
     private LuckPermsSubscriptionMap tryInject() throws Exception {
+// Solar start
+        return new LuckPermsSubscriptionMap(this.plugin, Map.of());
+/*
         Objects.requireNonNull(PERM_SUBS_FIELD, "PERM_SUBS_FIELD");
         PluginManager pluginManager = this.plugin.getBootstrap().getServer().getPluginManager();
 
@@ -95,9 +100,11 @@ public class InjectorSubscriptionMap {
         LuckPermsSubscriptionMap newMap = new LuckPermsSubscriptionMap(this.plugin, castedMap);
         PERM_SUBS_FIELD.set(pluginManager, newMap);
         return newMap;
+*/ // Solar end
     }
 
     public void uninject() {
+/* Solar start
         try {
             Objects.requireNonNull(PERM_SUBS_FIELD, "PERM_SUBS_FIELD");
 
@@ -114,6 +121,7 @@ public class InjectorSubscriptionMap {
         } catch (Exception e) {
             this.plugin.getLogger().severe("Exception occurred whilst uninjecting LuckPerms Permission Subscription map.", e);
         }
+*/ // Solar end
     }
 
 }

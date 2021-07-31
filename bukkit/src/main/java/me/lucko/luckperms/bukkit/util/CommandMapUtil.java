@@ -34,6 +34,7 @@ import java.lang.reflect.Field;
 public final class CommandMapUtil {
     private CommandMapUtil() {}
 
+/* Solar start
     private static final Field COMMAND_MAP_FIELD;
 
     static {
@@ -44,13 +45,17 @@ public final class CommandMapUtil {
             throw new ExceptionInInitializerError(e);
         }
     }
+*/ // Solar end
 
     public static CommandMap getCommandMap(Server server) {
+        return server.getCommandMap();
+/* Solar start
         try {
             return (CommandMap) COMMAND_MAP_FIELD.get(server.getPluginManager());
         } catch (Exception e) {
             throw new RuntimeException("Could not get CommandMap", e);
         }
+*/ // Solar end
     }
 
 }

@@ -40,6 +40,7 @@ import java.util.Objects;
  * Injects a {@link LuckPermsPermissionMap} into the {@link PluginManager}.
  */
 public class InjectorPermissionMap {
+/* Solar start
     private static final Field PERMISSIONS_FIELD;
 
     static {
@@ -52,6 +53,7 @@ public class InjectorPermissionMap {
         }
         PERMISSIONS_FIELD = permissionsField;
     }
+*/ // Solar end
 
     private final LPBukkitPlugin plugin;
 
@@ -71,6 +73,9 @@ public class InjectorPermissionMap {
     }
 
     private LuckPermsPermissionMap tryInject() throws Exception {
+// Solar start
+        return new LuckPermsPermissionMap(this.plugin, Map.of());
+/*
         Objects.requireNonNull(PERMISSIONS_FIELD, "PERMISSIONS_FIELD");
         PluginManager pluginManager = this.plugin.getBootstrap().getServer().getPluginManager();
 
@@ -92,9 +97,11 @@ public class InjectorPermissionMap {
         LuckPermsPermissionMap newMap = new LuckPermsPermissionMap(this.plugin, castedMap);
         PERMISSIONS_FIELD.set(pluginManager, newMap);
         return newMap;
+*/ // Solar end
     }
 
     public void uninject() {
+/* Solar start
         try {
             Objects.requireNonNull(PERMISSIONS_FIELD, "PERMISSIONS_FIELD");
 
@@ -111,6 +118,7 @@ public class InjectorPermissionMap {
         } catch (Exception e) {
             e.printStackTrace();
         }
+Solar end */
     }
 
 }

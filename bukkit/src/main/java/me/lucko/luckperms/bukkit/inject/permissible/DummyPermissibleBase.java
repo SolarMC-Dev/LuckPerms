@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.Set;
 
 public class DummyPermissibleBase extends PermissibleBase {
+/* Solar start
     private static final Field ATTACHMENTS_FIELD;
     private static final Field PERMISSIONS_FIELD;
 
@@ -62,18 +63,21 @@ public class DummyPermissibleBase extends PermissibleBase {
             throw new RuntimeException(e);
         }
     }
+*/ // Solar end
 
     public static final DummyPermissibleBase INSTANCE = new DummyPermissibleBase();
 
     private DummyPermissibleBase() {
         super(null);
 
+/* Solar start
         try {
             ATTACHMENTS_FIELD.set(this, EmptyCollections.list());
             PERMISSIONS_FIELD.set(this, EmptyCollections.map());
         } catch (Exception e) {
             e.printStackTrace();
         }
+*/ // Solar end
     }
 
     @Override public boolean isOp() { return false; }

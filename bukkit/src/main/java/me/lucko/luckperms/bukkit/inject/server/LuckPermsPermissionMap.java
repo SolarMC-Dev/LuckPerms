@@ -57,7 +57,8 @@ import java.util.function.Function;
  *
  * Injected by {@link InjectorPermissionMap}.
  */
-public final class LuckPermsPermissionMap extends ForwardingMap<String, Permission> {
+// Solar start - remove reflective junk
+public final class LuckPermsPermissionMap { /*
 
     private static final Field PERMISSION_CHILDREN_FIELD;
 
@@ -69,13 +70,16 @@ public final class LuckPermsPermissionMap extends ForwardingMap<String, Permissi
             throw new ExceptionInInitializerError(e);
         }
     }
+*/ // Solar end
 
     // Uses perm.getName().toLowerCase(java.util.Locale.ENGLISH); to determine the key
     private final Map<String, Permission> delegate = new ConcurrentHashMap<>();
 
     // cache from permission --> children
-    private final Map<String, Map<String, Boolean>> trueChildPermissions = LoadingMap.of(new ChildPermissionResolver(true));
-    private final Map<String, Map<String, Boolean>> falseChildPermissions = LoadingMap.of(new ChildPermissionResolver(false));
+// Solar start
+    private final Map<String, Map<String, Boolean>> trueChildPermissions = Map.of();
+    private final Map<String, Map<String, Boolean>> falseChildPermissions = Map.of();
+// Solar end
 
     /**
      * The plugin instance
@@ -84,11 +88,15 @@ public final class LuckPermsPermissionMap extends ForwardingMap<String, Permissi
 
     public LuckPermsPermissionMap(LuckPermsPlugin plugin, Map<String, Permission> existingData) {
         this.plugin = plugin;
-        putAll(existingData);
+//        putAll(existingData); // Solar
     }
 
     public Map<String, Boolean> getChildPermissions(String permission, boolean value) {
+// Solar start
+        return Map.of();
+/*
         return value ? this.trueChildPermissions.get(permission) : this.falseChildPermissions.get(permission);
+*/
     }
 
     private void update() {
@@ -97,6 +105,10 @@ public final class LuckPermsPermissionMap extends ForwardingMap<String, Permissi
         this.plugin.getUserManager().invalidateAllPermissionCalculators();
         this.plugin.getGroupManager().invalidateAllPermissionCalculators();
     }
+
+// Solar start
+    public Permission get(String key) { return null; }
+/*
 
     @Override
     protected Map<String, Permission> delegate() {
@@ -155,6 +167,7 @@ public final class LuckPermsPermissionMap extends ForwardingMap<String, Permissi
         }
         return super.get(key);
     }
+*/ // Solar end
 
     private final class ChildPermissionResolver implements Function<String, Map<String, Boolean>> {
         private final boolean value;
@@ -165,10 +178,14 @@ public final class LuckPermsPermissionMap extends ForwardingMap<String, Permissi
 
         @Override
         public Map<String, Boolean> apply(@NonNull String key) {
+// Solar start
+            return Map.of();
+/*
             Map<String, Boolean> children = new HashMap<>();
             resolveChildren(children, Collections.singletonMap(key, this.value), false);
             children.remove(key, this.value);
             return ImmutableMap.copyOf(children);
+*/ // Solar end
         }
     }
 
@@ -191,13 +208,16 @@ public final class LuckPermsPermissionMap extends ForwardingMap<String, Permissi
             accumulator.put(key, value);
 
             // lookup any deeper children & resolve if present
-            Permission perm = this.delegate.get(key);
+// Solar start
+            Permission perm = null;// this.delegate.get(key);
+// Solar end
             if (perm != null) {
                 resolveChildren(accumulator, perm.getChildren(), !value);
             }
         }
     }
 
+/* Solar start
     private Permission inject(Permission permission) {
         if (permission == null) {
             return null;
@@ -282,5 +302,6 @@ public final class LuckPermsPermissionMap extends ForwardingMap<String, Permissi
             LuckPermsPermissionMap.this.update();
         }
     }
+*/ // Solar end
 
 }

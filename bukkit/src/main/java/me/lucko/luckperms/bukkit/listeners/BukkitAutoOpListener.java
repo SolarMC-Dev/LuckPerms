@@ -53,6 +53,7 @@ public class BukkitAutoOpListener implements LuckPermsEventListener {
 
     @Override
     public void bind(EventBus bus) {
+/* Solar start
         bus.subscribe(UserDataRecalculateEvent.class, this::onUserDataRecalculate);
         bus.subscribe(ContextUpdateEvent.class, this::onContextUpdate);
     }
@@ -87,6 +88,7 @@ public class BukkitAutoOpListener implements LuckPermsEventListener {
         } else {
             this.plugin.getBootstrap().getScheduler().executeSync(() -> player.setOp(value));
         }
+*/ // Solar end
     }
 
 }

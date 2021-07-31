@@ -41,6 +41,7 @@ import java.util.Set;
  * Injects a {@link LuckPermsDefaultsMap} info the {@link PluginManager}.
  */
 public class InjectorDefaultsMap {
+/* Solar start
     private static final Field DEFAULT_PERMISSIONS_FIELD;
 
     static {
@@ -53,6 +54,7 @@ public class InjectorDefaultsMap {
         }
         DEFAULT_PERMISSIONS_FIELD = permissionsField;
     }
+*/ // Solar end
 
     private final LPBukkitPlugin plugin;
 
@@ -72,6 +74,9 @@ public class InjectorDefaultsMap {
     }
 
     private LuckPermsDefaultsMap tryInject() throws Exception {
+// Solar start
+        return new LuckPermsDefaultsMap(this.plugin, Map.of());
+/*
         Objects.requireNonNull(DEFAULT_PERMISSIONS_FIELD, "DEFAULT_PERMISSIONS_FIELD");
         PluginManager pluginManager = this.plugin.getBootstrap().getServer().getPluginManager();
 
@@ -93,9 +98,11 @@ public class InjectorDefaultsMap {
         LuckPermsDefaultsMap newMap = new LuckPermsDefaultsMap(this.plugin, castedMap);
         DEFAULT_PERMISSIONS_FIELD.set(pluginManager, newMap);
         return newMap;
+*/ // Solar end
     }
 
     public void uninject() {
+/* Solar start
         try {
             Objects.requireNonNull(DEFAULT_PERMISSIONS_FIELD, "DEFAULT_PERMISSIONS_FIELD");
 
@@ -112,5 +119,6 @@ public class InjectorDefaultsMap {
         } catch (Exception e) {
             this.plugin.getLogger().severe("Exception occurred whilst uninjecting LuckPerms Default Permission map.", e);
         }
+*/ // Solar end
     }
 }

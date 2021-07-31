@@ -64,24 +64,30 @@ public final class LuckPermsDefaultsMap implements Map<Boolean, Set<Permission>>
     final LPBukkitPlugin plugin;
 
     // the two values in the map
-    private final Set<Permission> opSet = new DefaultPermissionSet(true);
-    private final Set<Permission> nonOpSet = new DefaultPermissionSet(false);
+// Solar start
+    private final Set<Permission> opSet = Set.of();
+    private final Set<Permission> nonOpSet = Set.of();
+// Solar end
 
     // fully resolved defaults (accounts for child permissions too)
     private final DefaultsCache opCache = new DefaultsCache(true);
     private final DefaultsCache nonOpCache = new DefaultsCache(false);
 
     // #values and #entrySet results - both immutable
-    private final Collection<Set<Permission>> values = ImmutableList.of(this.opSet, this.nonOpSet);
-    private final Set<Entry<Boolean, Set<Permission>>> entrySet = ImmutableSet.of(
-            Maps.immutableEntry(Boolean.TRUE, this.opSet),
-            Maps.immutableEntry(Boolean.FALSE, this.nonOpSet)
+// Solar start
+    private final Collection<Set<Permission>> values = Set.of(this.opSet, this.nonOpSet);
+    private final Set<Entry<Boolean, Set<Permission>>> entrySet = Set.of(
+            Map.entry(Boolean.TRUE, this.opSet),
+            Map.entry(Boolean.FALSE, this.nonOpSet)
+// Solar end
     );
 
     public LuckPermsDefaultsMap(LPBukkitPlugin plugin, Map<Boolean, Set<Permission>> existingData) {
         this.plugin = plugin;
+/* Solar start
         this.opSet.addAll(existingData.getOrDefault(Boolean.TRUE, Collections.emptySet()));
         this.nonOpSet.addAll(existingData.getOrDefault(Boolean.FALSE, Collections.emptySet()));
+*/ // Solar end
     }
 
     @Override
@@ -108,8 +114,11 @@ public final class LuckPermsDefaultsMap implements Map<Boolean, Set<Permission>>
      * @return a tristate result
      */
     public Tristate lookupDefaultPermission(String permission, boolean isOp) {
+        return Tristate.FALSE;
+/* Solar start
         Map<String, Boolean> map = getCache(isOp).get();
         return Tristate.of(map.get(permission));
+*/ // Solar end
     }
 
     // return wrappers around this map impl

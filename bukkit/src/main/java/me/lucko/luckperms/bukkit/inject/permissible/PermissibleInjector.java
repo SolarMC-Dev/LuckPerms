@@ -140,7 +140,6 @@ public final class PermissibleInjector {
      */
     public static void uninject(Player player, boolean dummy) throws Exception {
 // Solar start
-        assert dummy : "Not possible to safely uninject except on quit";
         if (dummy) player.setPermissible(DummyPermissibleBase.INSTANCE);
 /*
         // gets the players current permissible.
