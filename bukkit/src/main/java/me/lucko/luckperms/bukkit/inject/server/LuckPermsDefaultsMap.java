@@ -43,6 +43,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -75,7 +76,7 @@ public final class LuckPermsDefaultsMap implements Map<Boolean, Set<Permission>>
 
     // #values and #entrySet results - both immutable
 // Solar start
-    private final Collection<Set<Permission>> values = Set.of(this.opSet, this.nonOpSet);
+    private final Collection<Set<Permission>> values = List.of(this.opSet, this.nonOpSet);
     private final Set<Entry<Boolean, Set<Permission>>> entrySet = Set.of(
             Map.entry(Boolean.TRUE, this.opSet),
             Map.entry(Boolean.FALSE, this.nonOpSet)
