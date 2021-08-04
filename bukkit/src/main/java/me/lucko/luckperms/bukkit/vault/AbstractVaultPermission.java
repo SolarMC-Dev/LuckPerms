@@ -53,7 +53,7 @@ import java.util.UUID;
 @SuppressWarnings("deprecation")
 public abstract class AbstractVaultPermission extends Permission {
     public AbstractVaultPermission() {
-        super.plugin = JavaPlugin.getProvidingPlugin(Permission.class);
+        super.plugin = org.bukkit.Bukkit.getServer().getPluginManager().getPlugin("Vault"); // Solar
     }
 
     @Override
