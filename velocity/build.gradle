@@ -3,15 +3,14 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.0.0' // Solar - update
 }
 
-repositories {
-    maven { url 'https://repo.velocitypowered.com/releases/' }
-}
+// Solar - removed repositories
 
 dependencies {
     implementation project(':common') // Solar
 
-    compileOnly 'com.velocitypowered:velocity-api:3.0.0' // Solar - velocity 3
-    annotationProcessor 'com.velocitypowered:velocity-api:3.0.0' // Solar - velocity 3
+    compileOnly 'gg.solarmc.velocity:velocity-api:3.0.2' // Solar
+    annotationProcessor 'gg.solarmc.velocity:velocity-api:3.0.2' // Solar
+    implementation "org.spongepowered:configurate-yaml:3.7.2" // Solar
 }
 
 blossom {
@@ -25,26 +24,40 @@ shadowJar {
     dependencies {
         include(dependency('net.luckperms:.*'))
         include(dependency('me.lucko.luckperms:.*'))
+// Solar start
+        exclude(dependency("net.kyori:adventure-api"))
+        exclude(dependency("net.kyori:adventure-key"))
+        exclude(dependency("net.kyori:examination-api"))
+        exclude(dependency("net.kyori:examination-string"))
+        exclude(dependency("net.kyori:adventure-text-serializer-gson"))
+        exclude(dependency("net.kyori:adventure-text-serializer-legacy"))
+        exclude(dependency("net.kyori:adventure-text-serializer-plain"))
+        exclude(dependency("net.kyori:adventure-nbt"))
+        exclude(dependency("com.github.ben-manes.caffeine:caffeine"))
+        exclude(dependency("org.mariadb.jdbc:mariadb-java-client"))
+        exclude(dependency("com.zaxxer:HikariCP"))
+        exclude(dependency("org.yaml:snakeyaml"))
+// Solar end
     }
 
-    relocate 'net.kyori.adventure', 'me.lucko.luckperms.lib.adventure'
+//    relocate 'net.kyori.adventure', 'me.lucko.luckperms.lib.adventure' // Solar
     relocate 'net.kyori.event', 'me.lucko.luckperms.lib.eventbus'
-    relocate 'com.github.benmanes.caffeine', 'me.lucko.luckperms.lib.caffeine'
+//    relocate 'com.github.benmanes.caffeine', 'me.lucko.luckperms.lib.caffeine' // Solar
     relocate 'okio', 'me.lucko.luckperms.lib.okio'
     relocate 'okhttp3', 'me.lucko.luckperms.lib.okhttp3'
     relocate 'net.bytebuddy', 'me.lucko.luckperms.lib.bytebuddy'
     relocate 'me.lucko.commodore', 'me.lucko.luckperms.lib.commodore'
-    relocate 'org.mariadb.jdbc', 'me.lucko.luckperms.lib.mariadb'
+//    relocate 'org.mariadb.jdbc', 'me.lucko.luckperms.lib.mariadb' // Solar
     relocate 'com.mysql', 'me.lucko.luckperms.lib.mysql'
     relocate 'org.postgresql', 'me.lucko.luckperms.lib.postgresql'
-    relocate 'com.zaxxer.hikari', 'me.lucko.luckperms.lib.hikari'
+//    relocate 'com.zaxxer.hikari', 'me.lucko.luckperms.lib.hikari' // Solar
     relocate 'com.mongodb', 'me.lucko.luckperms.lib.mongodb'
     relocate 'org.bson', 'me.lucko.luckperms.lib.bson'
     relocate 'redis.clients.jedis', 'me.lucko.luckperms.lib.jedis'
     relocate 'com.rabbitmq', 'me.lucko.luckperms.lib.rabbitmq'
     relocate 'org.apache.commons.pool2', 'me.lucko.luckperms.lib.commonspool2'
     relocate 'ninja.leaping.configurate', 'me.lucko.luckperms.lib.configurate'
-    relocate 'org.yaml.snakeyaml', 'me.lucko.luckperms.lib.yaml'
+//    relocate 'org.yaml.snakeyaml', 'me.lucko.luckperms.lib.yaml' // Solar
 }
 
 artifacts {

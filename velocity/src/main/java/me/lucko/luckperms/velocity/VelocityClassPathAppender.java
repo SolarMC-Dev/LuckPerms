@@ -38,6 +38,9 @@ public class VelocityClassPathAppender implements ClassPathAppender {
 
     @Override
     public void addJarToClasspath(Path file) {
+// Solar start
+        org.slf4j.LoggerFactory.getLogger(getClass()).warn("Solar - Skipping jar {}", file); /*
         this.bootstrap.getProxy().getPluginManager().addToClasspath(this.bootstrap, file);
+*/ // Solar end
     }
 }

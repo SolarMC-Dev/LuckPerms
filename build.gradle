@@ -61,11 +61,12 @@ subprojects {
 
     repositories {
         mavenCentral()
+/* Solar start
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-//        maven { url 'https://repo.lucko.me/' }
-        maven { url "https://mvn-repo.solarmc.gg/releases" }
-        maven { url "https://mvn-repo.solarmc.gg/snapshots" }
-        maven { url "https://mvn-repo.arim.space/lesser-gpl3" }
+        maven { url 'https://repo.lucko.me/' }
+*/
+        maven { url "https://repo.solarmc.gg/mvn" }
+// Solar end
     }
 
 // Solar start
