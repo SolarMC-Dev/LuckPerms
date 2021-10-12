@@ -14,8 +14,10 @@ subprojects {
     group = 'me.lucko.luckperms'
     version = '5.3-SNAPSHOT'
 
+// Solar start
     sourceCompatibility = 16
     targetCompatibility = 16
+// Solar end
 
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
